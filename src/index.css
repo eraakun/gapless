@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+/*
+ * Gapless design tokens: bright and bold.
+ * Grape for actions, sun for the gaps we fill, mint for "covered",
+ * coral for anything urgent, on a light lavender page. Chunky rounded
+ * shapes and pressable 3D buttons. Stock teal/amber/red/emerald/slate
+ * scales are remapped so every component follows.
+ */
+@theme {
+  --font-sans: "Nunito", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Fredoka", "Nunito", ui-rounded, ui-sans-serif, system-ui, sans-serif;
+  --font-hand: "Fredoka", "Nunito", ui-sans-serif, sans-serif;
+
+  /* Grape: actions. */
+  --color-teal-50: #f3f0ff;
+  --color-teal-100: #e7e0ff;
+  --color-teal-200: #cfc2ff;
+  --color-teal-300: #ad97ff;
+  --color-teal-600: #6c47ff;
+  --color-teal-700: #5a32f0;
+  --color-teal-800: #4724c4;
+  --color-teal-900: #351a94;
+
+  /* Sun: the gaps we fill, highlights, Pro. */
+  --color-amber-50: #fff9e6;
+  --color-amber-100: #fff0bf;
+  --color-amber-200: #ffe38a;
+  --color-amber-300: #ffd458;
+  --color-amber-400: #ffc83d;
+  --color-amber-500: #f5b400;
+  --color-amber-700: #8a5d00;
+  --color-amber-800: #6b4800;
+  --color-amber-900: #4a3200;
+
+  /* Coral: urgent. */
+  --color-red-50: #fff1ee;
+  --color-red-100: #ffdcd5;
+  --color-red-600: #f2492f;
+  --color-red-700: #d23a22;
+  --color-red-800: #a82d1a;
+  --color-red-900: #7a2013;
+
+  /* Mint: covered, good news. */
+  --color-emerald-50: #e8fbf4;
+  --color-emerald-100: #c8f5e3;
+  --color-emerald-500: #14b981;
+  --color-emerald-900: #0b4a37;
+  --color-emerald-950: #06321f;
+
+  /* Ink lavender greys. */
+  --color-slate-50: #f7f6fc;
+  --color-slate-100: #efedf8;
+  --color-slate-200: #e2dff0;
+  --color-slate-300: #cbc7df;
+  --color-slate-400: #9a95b3;
+  --color-slate-500: #6e6987;
+  --color-slate-600: #524d6b;
+  --color-slate-700: #3b3752;
+  --color-slate-800: #2a2740;
+  --color-slate-900: #1e1b3a;
+}
+
+body {
+  background: #f4f1ff;
+  color: #1e1b3a;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+h2 {
+  font-size: 1.35rem;
+}
+h3 {
+  font-size: 1.1rem;
+}
+
+.hand {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+/* A sun pill behind a number. */
+.highlight {
+  background: #ffc83d;
+  border-radius: 0.3em;
+  padding: 0 0.18em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Friendly callout for notices. */
+.sticky-note {
+  background: #fff0bf;
+  border: 2px solid #ffd458;
+  border-radius: 1rem;
+}
+
+.margin-page {
+  position: relative;
+}
+.tape {
+  display: none;
+}
+
+/* Pressable, chunky buttons. */
+button.bg-teal-700,
+a.bg-teal-700 {
+  box-shadow: 0 4px 0 #351a94;
+}
+button.bg-slate-900 {
+  box-shadow: 0 4px 0 #000;
+}
+button.bg-amber-400 {
+  box-shadow: 0 4px 0 #c48a00;
+}
+button.bg-teal-700:active,
+button.bg-slate-900:active,
+button.bg-amber-400:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #351a94;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-teal-700);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+/* The logo's block drops into the empty day, once. */
+@keyframes gap-drop {
+  0% { transform: translateY(-14px); opacity: 0; }
+  55% { transform: translateY(1.5px); opacity: 1; }
+  75% { transform: translateY(-1px); }
+  100% { transform: translateY(0); }
+}
+.gap-drop {
+  animation: gap-drop 700ms cubic-bezier(0.3, 0.7, 0.4, 1) 250ms both;
+}
+
+/* Landing grid: the empty days pop in, one after another. */
+@keyframes gap-fill {
+  0% { opacity: 0; transform: scale(0.2); }
+  70% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.gap-fill {
+  animation: gap-fill 320ms cubic-bezier(0.3, 0.7, 0.4, 1.4) both;
+}
+
+/* Landing grid: 83 weekdays without school. */
+.hero-grid {
+  display: grid;
+  grid-template-columns: repeat(21, minmax(0, 1fr));
+  gap: 4px;
+}
+@media (min-width: 640px) {
+  .hero-grid {
+    grid-template-columns: repeat(28, minmax(0, 1fr));
+    gap: 5px;
+  }
+}
+.hero-cell {
+  aspect-ratio: 1 / 1;
+  display: block;
+  border-radius: 9999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Amounts are typed, not clicked. */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Guided tour: the block being explained. */
+.tour-target {
+  outline: 4px solid #ffc83d;
+  outline-offset: 6px;
+  position: relative;
+  z-index: 40;
+  transition: outline-color 200ms;
+}
+
+/* Printing shows only the one-page plan. */
+@media print {
+  #root > div > *:not(#print-report) {
+    display: none !important;
+  }
+  body {
+    background: #fff !important;
+  }
+  @page {
+    margin: 14mm;
+  }
+}
